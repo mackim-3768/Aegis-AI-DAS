@@ -1,6 +1,5 @@
 package com.aegis.das.ui.screens.tab2
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -8,7 +7,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -19,6 +17,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import com.aegis.das.domain.state.ToolState
 import com.aegis.das.domain.tools.ToolKind
+import com.aegis.das.ui.components.GlassCard
 
 @Composable
 internal fun ToolCard(
@@ -35,21 +34,11 @@ internal fun ToolCard(
     }
     val primaryValue = primaryKey?.let { toolState.payload[it] }
 
-    ElevatedCard(
-        modifier = modifier
-            .fillMaxWidth()
-            .then(
-                if (enabled) {
-                    Modifier.clickable(onClick = onClick)
-                } else {
-                    Modifier
-                }
-            )
+    GlassCard(
+        modifier = modifier.fillMaxWidth(),
+        onClick = if (enabled) onClick else null
     ) {
-        Column(
-            modifier = Modifier.padding(14.dp),
-            verticalArrangement = Arrangement.spacedBy(10.dp)
-        ) {
+        Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.spacedBy(10.dp)

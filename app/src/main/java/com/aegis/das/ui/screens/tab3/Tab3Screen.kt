@@ -1,8 +1,6 @@
 package com.aegis.das.ui.screens.tab3
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -27,6 +25,7 @@ import androidx.compose.ui.unit.dp
 import com.aegis.das.domain.state.AppState
 import com.aegis.das.domain.state.LogEntry
 import com.aegis.das.domain.state.LogEntryType
+import com.aegis.das.ui.components.GlassCard
 import kotlinx.coroutines.delay
 
 @Composable
@@ -101,15 +100,7 @@ private fun ThoughtBubble(
                 }
             }
 
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .background(
-                        color = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.55f),
-                        shape = MaterialTheme.shapes.medium
-                    )
-                    .padding(14.dp)
-            ) {
+            GlassCard(modifier = Modifier.fillMaxWidth()) {
                 Text(
                     text = latest.take(visibleChars.coerceAtMost(latest.length)),
                     style = MaterialTheme.typography.bodyMedium
@@ -161,15 +152,9 @@ private fun TimelineItem(entry: LogEntry) {
         }
     }
 
-    Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .background(
-                color = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.35f),
-                shape = MaterialTheme.shapes.medium
-            )
-            .padding(12.dp),
-        verticalArrangement = Arrangement.spacedBy(8.dp)
+    GlassCard(
+        modifier = Modifier.fillMaxWidth(),
+        contentPadding = Modifier.padding(12.dp)
     ) {
         Text(header, style = MaterialTheme.typography.labelMedium)
         if (entry.payload != null) {
