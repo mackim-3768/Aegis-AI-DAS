@@ -12,9 +12,12 @@
           },
           "confidence": {
             "type": "NUMBER",
-            "description": "Detection confidence (0.0-1.0)."
+            "description": "Detection confidence (0.0-1.0).",
+            "minimum": 0.0,
+            "maximum": 1.0
           }
         },
+        "additionalProperties": false,
         "required": [
           "value"
         ]
@@ -34,9 +37,12 @@
           },
           "confidence": {
             "type": "NUMBER",
-            "description": "Detection confidence (0.0-1.0)."
+            "description": "Detection confidence (0.0-1.0).",
+            "minimum": 0.0,
+            "maximum": 1.0
           }
         },
+        "additionalProperties": false,
         "required": [
           "value"
         ]
@@ -60,9 +66,12 @@
           },
           "confidence": {
             "type": "NUMBER",
-            "description": "Overall measurement confidence (0.0-1.0)."
+            "description": "Overall measurement confidence (0.0-1.0).",
+            "minimum": 0.0,
+            "maximum": 1.0
           }
         },
+        "additionalProperties": false,
         "required": [
           "heart_rate",
           "body_temperature"
@@ -90,9 +99,12 @@
           },
           "confidence": {
             "type": "NUMBER",
-            "description": "Estimation confidence (0.0-1.0)."
+            "description": "Estimation confidence (0.0-1.0).",
+            "minimum": 0.0,
+            "maximum": 1.0
           }
         },
+        "additionalProperties": false,
         "required": [
           "direction"
         ]
@@ -120,6 +132,7 @@
             ]
           }
         },
+        "additionalProperties": false,
         "required": [
           "value",
           "level"
@@ -139,6 +152,7 @@
             "description": "Current vehicle speed."
           }
         },
+        "additionalProperties": false,
         "required": [
           "value"
         ]
@@ -157,6 +171,7 @@
             "description": "Whether LKA is enabled."
           }
         },
+        "additionalProperties": false,
         "required": [
           "value"
         ]
@@ -184,6 +199,7 @@
             ]
           }
         },
+        "additionalProperties": false,
         "required": [
           "value",
           "level"
@@ -219,9 +235,11 @@
                 },
                 "timestamp": {
                   "type": "STRING",
-                  "description": "Event timestamp (ISO-8601 recommended)."
+                  "description": "Event timestamp (ISO-8601 recommended).",
+                  "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d+)?(?:Z|[+-]\\d{2}:\\d{2})$"
                 }
               },
+              "additionalProperties": false,
               "required": [
                 "type",
                 "severity",
@@ -230,6 +248,7 @@
             }
           }
         },
+        "additionalProperties": false,
         "required": [
           "warnings"
         ]
@@ -256,6 +275,7 @@
             "description": "Whether the AI/perception model subsystem is healthy."
           }
         },
+        "additionalProperties": false,
         "required": [
           "overall_ok",
           "camera_ok",
@@ -277,9 +297,12 @@
           },
           "confidence": {
             "type": "NUMBER",
-            "description": "Lane detection confidence (0.0-1.0)."
+            "description": "Lane detection confidence (0.0-1.0).",
+            "minimum": 0.0,
+            "maximum": 1.0
           }
         },
+        "additionalProperties": false,
         "required": [
           "value"
         ]
@@ -308,9 +331,12 @@
           },
           "confidence": {
             "type": "NUMBER",
-            "description": "Risk estimation confidence (0.0-1.0)."
+            "description": "Risk estimation confidence (0.0-1.0).",
+            "minimum": 0.0,
+            "maximum": 1.0
           }
         },
+        "additionalProperties": false,
         "required": [
           "score",
           "level"
@@ -357,6 +383,7 @@
             ]
           }
         },
+        "additionalProperties": false,
         "required": [
           "weather",
           "road_condition",
@@ -386,6 +413,7 @@
             ]
           }
         },
+        "additionalProperties": false,
         "required": [
           "value",
           "level"
@@ -415,9 +443,12 @@
           },
           "confidence": {
             "type": "NUMBER",
-            "description": "Estimation confidence (0.0-1.0)."
+            "description": "Estimation confidence (0.0-1.0).",
+            "minimum": 0.0,
+            "maximum": 1.0
           }
         },
+        "additionalProperties": false,
         "required": [
           "value",
           "level"
@@ -458,6 +489,7 @@
                   ]
                 }
               },
+              "additionalProperties": false,
               "required": [
                 "kind",
                 "severity"
@@ -466,9 +498,12 @@
           },
           "confidence": {
             "type": "NUMBER",
-            "description": "Overall hazard identification confidence (0.0-1.0)."
+            "description": "Overall hazard identification confidence (0.0-1.0).",
+            "minimum": 0.0,
+            "maximum": 1.0
           }
         },
+        "additionalProperties": false,
         "required": [
           "hazards"
         ]
@@ -494,7 +529,8 @@
           },
           "time_to_change": {
             "type": "INTEGER",
-            "description": "Seconds until the signal changes if available."
+            "description": "Seconds until the signal changes if available.",
+            "minimum": 0
           },
           "incident_level": {
             "type": "STRING",
@@ -507,6 +543,7 @@
             ]
           }
         },
+        "additionalProperties": false,
         "required": [
           "signal_state",
           "incident_level"
@@ -542,9 +579,12 @@
           },
           "confidence": {
             "type": "NUMBER",
-            "description": "Estimation confidence (0.0-1.0)."
+            "description": "Estimation confidence (0.0-1.0).",
+            "minimum": 0.0,
+            "maximum": 1.0
           }
         },
+        "additionalProperties": false,
         "required": [
           "value",
           "direction"
@@ -565,9 +605,12 @@
           },
           "confidence": {
             "type": "NUMBER",
-            "description": "Detection confidence (0.0-1.0)."
+            "description": "Detection confidence (0.0-1.0).",
+            "minimum": 0.0,
+            "maximum": 1.0
           }
         },
+        "additionalProperties": false,
         "required": [
           "value"
         ]
@@ -607,6 +650,7 @@
                   "description": "Measured seat weight value."
                 }
               },
+              "additionalProperties": false,
               "required": [
                 "seat",
                 "occupied"
@@ -615,9 +659,12 @@
           },
           "confidence": {
             "type": "NUMBER",
-            "description": "Overall measurement confidence (0.0-1.0)."
+            "description": "Overall measurement confidence (0.0-1.0).",
+            "minimum": 0.0,
+            "maximum": 1.0
           }
         },
+        "additionalProperties": false,
         "required": [
           "seats"
         ]
@@ -645,6 +692,7 @@
             ]
           }
         },
+        "additionalProperties": false,
         "required": [
           "value",
           "level"
@@ -673,6 +721,7 @@
             ]
           }
         },
+        "additionalProperties": false,
         "required": [
           "value",
           "level"
@@ -706,6 +755,7 @@
             "description": "Whether the thermal management/cooling is active."
           }
         },
+        "additionalProperties": false,
         "required": [
           "temperature",
           "level",
@@ -736,9 +786,12 @@
           },
           "confidence": {
             "type": "NUMBER",
-            "description": "Detection confidence (0.0-1.0)."
+            "description": "Detection confidence (0.0-1.0).",
+            "minimum": 0.0,
+            "maximum": 1.0
           }
         },
+        "additionalProperties": false,
         "required": [
           "value",
           "level"
@@ -769,9 +822,12 @@
           },
           "confidence": {
             "type": "NUMBER",
-            "description": "Detection confidence (0.0-1.0)."
+            "description": "Detection confidence (0.0-1.0).",
+            "minimum": 0.0,
+            "maximum": 1.0
           }
         },
+        "additionalProperties": false,
         "required": [
           "value",
           "level"

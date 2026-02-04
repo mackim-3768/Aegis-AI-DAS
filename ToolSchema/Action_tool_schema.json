@@ -17,9 +17,12 @@
           },
           "duration_ms": {
             "type": "INTEGER",
-            "description": "Vibration duration in milliseconds."
+            "description": "Vibration duration in milliseconds.",
+            "minimum": 0,
+            "maximum": 3600000
           }
         },
+        "additionalProperties": false,
         "required": [
           "level"
         ]
@@ -47,8 +50,10 @@
             ]
           }
         },
+        "additionalProperties": false,
         "required": [
-          "enabled"
+          "enabled",
+          "level"
         ]
       }
     }
@@ -74,6 +79,7 @@
             ]
           }
         },
+        "additionalProperties": false,
         "required": [
           "message",
           "level"
@@ -102,6 +108,7 @@
             ]
           }
         },
+        "additionalProperties": false,
         "required": [
           "message",
           "level"
@@ -130,8 +137,10 @@
             ]
           }
         },
+        "additionalProperties": false,
         "required": [
-          "message"
+          "message",
+          "level"
         ]
       }
     }
@@ -157,6 +166,7 @@
             "description": "Whether lighting should pulse."
           }
         },
+        "additionalProperties": false,
         "required": [
           "level"
         ]
@@ -176,9 +186,12 @@
           },
           "duration_ms": {
             "type": "INTEGER",
-            "description": "Scent release duration in milliseconds."
+            "description": "Scent release duration in milliseconds.",
+            "minimum": 0,
+            "maximum": 3600000
           }
         },
+        "additionalProperties": false,
         "required": [
           "enabled"
         ]
@@ -203,6 +216,7 @@
             ]
           }
         },
+        "additionalProperties": false,
         "required": [
           "level"
         ]
@@ -225,6 +239,7 @@
             "description": "Optional reason for requesting safe mode."
           }
         },
+        "additionalProperties": false,
         "required": [
           "enabled"
         ]
@@ -256,6 +271,7 @@
             ]
           }
         },
+        "additionalProperties": false,
         "required": [
           "event_type",
           "level"
@@ -284,6 +300,7 @@
             ]
           }
         },
+        "additionalProperties": false,
         "required": [
           "message",
           "level"
@@ -312,8 +329,10 @@
             ]
           }
         },
+        "additionalProperties": false,
         "required": [
-          "reason"
+          "reason",
+          "level"
         ]
       }
     }
@@ -339,8 +358,10 @@
             ]
           }
         },
+        "additionalProperties": false,
         "required": [
-          "enabled"
+          "enabled",
+          "level"
         ]
       }
     }
@@ -358,9 +379,12 @@
           },
           "duration_ms": {
             "type": "INTEGER",
-            "description": "How long the hazard signals should stay active."
+            "description": "How long the hazard signals should stay active.",
+            "minimum": 0,
+            "maximum": 3600000
           }
         },
+        "additionalProperties": false,
         "required": [
           "enabled"
         ]
@@ -383,6 +407,7 @@
             "description": "Reason for emergency stop/pull-over."
           }
         },
+        "additionalProperties": false,
         "required": [
           "enabled"
         ]
@@ -406,6 +431,7 @@
             ]
           }
         },
+        "additionalProperties": false,
         "required": [
           "level"
         ]
@@ -438,6 +464,7 @@
             ]
           }
         },
+        "additionalProperties": false,
         "required": [
           "target",
           "action"
@@ -465,8 +492,10 @@
             ]
           }
         },
+        "additionalProperties": false,
         "required": [
-          "enabled"
+          "enabled",
+          "level"
         ]
       }
     }
@@ -491,6 +520,7 @@
             ]
           }
         },
+        "additionalProperties": false,
         "required": [
           "message",
           "level"
@@ -519,8 +549,10 @@
             ]
           }
         },
+        "additionalProperties": false,
         "required": [
-          "enabled"
+          "enabled",
+          "level"
         ]
       }
     }
@@ -537,6 +569,7 @@
             "description": "Whether to deploy active pedestrian protection."
           }
         },
+        "additionalProperties": false,
         "required": [
           "enabled"
         ]
@@ -564,8 +597,10 @@
             ]
           }
         },
+        "additionalProperties": false,
         "required": [
-          "enabled"
+          "enabled",
+          "level"
         ]
       }
     }
@@ -586,6 +621,7 @@
             ]
           }
         },
+        "additionalProperties": false,
         "required": [
           "mode"
         ]
@@ -605,9 +641,12 @@
           },
           "duration_ms": {
             "type": "INTEGER",
-            "description": "Massage duration in milliseconds."
+            "description": "Massage duration in milliseconds.",
+            "minimum": 0,
+            "maximum": 3600000
           }
         },
+        "additionalProperties": false,
         "required": [
           "enabled"
         ]
@@ -635,8 +674,10 @@
             ]
           }
         },
+        "additionalProperties": false,
         "required": [
-          "enabled"
+          "enabled",
+          "level"
         ]
       }
     }
