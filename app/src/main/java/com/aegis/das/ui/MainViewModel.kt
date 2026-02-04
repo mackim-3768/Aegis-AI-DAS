@@ -6,6 +6,8 @@ import com.aegis.das.domain.inference.MockInferenceEngine
 import com.aegis.das.domain.scenario.ScenarioPreset
 import com.aegis.das.domain.state.AppState
 import com.aegis.das.domain.state.InferenceSnapshot
+import com.aegis.das.domain.state.LogEntry
+import com.aegis.das.domain.state.LogEntryType
 import com.aegis.das.domain.state.ProcessorType
 import com.aegis.das.domain.state.ToolDefaults
 import com.aegis.das.domain.state.ToolState
@@ -20,6 +22,8 @@ class MainViewModel : ViewModel() {
     private val inferenceEngine: InferenceEngine = MockInferenceEngine()
     private val _state = MutableStateFlow(AppState())
     val state: StateFlow<AppState> = _state.asStateFlow()
+
+    private var logIdCounter: Long = 0L
 
     fun setDebugMode(enabled: Boolean) {
         _state.update { it.copy(debugMode = enabled) }
@@ -74,7 +78,39 @@ class MainViewModel : ViewModel() {
     }
 
     fun runInference() {
+        val startedAt = System.nanoTime()
         val result = inferenceEngine.infer(_state.value)
+        val finishedAt = System.nanoTime()
+        val durationMs = (finishedAt - startedAt) / 1_000_000
+        val now = System.currentTimeMillis()
+
+        val newLogs = buildList {
+            add(
+                LogEntry(
+                    id = nextLogId(),
+                    type = LogEntryType.THOUGHT,
+                    timestamp = now,
+                    message = result.thought
+                )
+            )
+            add(
+                LogEntry(
+                    id = nextLogId(),
+                    type = LogEntryType.INPUT,
+                    timestamp = now,
+                    payload = result.rawInput
+                )
+            )
+            add(
+                LogEntry(
+                    id = nextLogId(),
+                    type = LogEntryType.OUTPUT,
+                    timestamp = now,
+                    payload = result.rawOutput
+                )
+            )
+        }
+
         _state.update { appState ->
             val updatedActions = result.actionCalls.fold(appState.actionStates) { acc, call ->
                 val sanitized = sanitizePayload(call.toolId, call.args)
@@ -86,6 +122,24 @@ class MainViewModel : ViewModel() {
                     acc + (call.toolId to current.withPayload(nextPayload))
                 }
             }
+
+            val systemLogs = if (appState.debugMode) {
+                listOf(
+                    LogEntry(
+                        id = nextLogId(),
+                        type = LogEntryType.SYSTEM,
+                        timestamp = now,
+                        message = "inference_ms=$durationMs",
+                        payload = mapOf(
+                            "duration_ms" to durationMs,
+                            "processor" to appState.processor.name
+                        )
+                    )
+                )
+            } else {
+                emptyList()
+            }
+
             appState.copy(
                 actionStates = updatedActions,
                 lastInference = InferenceSnapshot(
@@ -93,10 +147,19 @@ class MainViewModel : ViewModel() {
                     summary = result.summary,
                     severity = result.severity,
                     actionToolNames = result.actionCalls.map { it.toolId.toolName },
-                    timestamp = System.currentTimeMillis()
-                )
+                    timestamp = now
+                ),
+                logEntries = appendLogs(appState.logEntries, newLogs + systemLogs)
             )
         }
+    }
+
+    private fun nextLogId(): Long = ++logIdCounter
+
+    private fun appendLogs(existing: List<LogEntry>, incoming: List<LogEntry>): List<LogEntry> {
+        val combined = existing + incoming
+        val maxSize = 200
+        return if (combined.size <= maxSize) combined else combined.takeLast(maxSize)
     }
 
     fun applyActionCall(toolName: String, args: Map<String, Any?>) {
