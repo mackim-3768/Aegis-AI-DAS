@@ -1,6 +1,8 @@
 DataSet/*.jsonl
 DataSet/**/*.jsonl
 
+DataSet/mlflow_upload_summary.json
+
 local.properties
 
 .gradle/
@@ -10,3 +12,5 @@ venv/
 
 gradle/wrapper/gradle-wrapper-plugin.jar
 gradle/wrapper/gradle-wrapper-shared.jar
+
+mlflow.db
