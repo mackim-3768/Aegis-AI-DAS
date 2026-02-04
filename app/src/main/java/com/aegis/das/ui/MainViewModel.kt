@@ -29,6 +29,18 @@ class MainViewModel : ViewModel() {
         _state.update { it.copy(processor = processor) }
     }
 
+    fun updateTool(toolName: String, partial: Map<String, Any?>) {
+        val toolId = ToolId.fromName(toolName) ?: return
+        updateTool(toolId, partial)
+    }
+
+    fun updateTool(toolId: ToolId, partial: Map<String, Any?>) {
+        when (toolId.kind) {
+            ToolKind.CONTEXT -> updateContextTool(toolId, partial)
+            ToolKind.ACTION -> applyActionCall(toolId, partial)
+        }
+    }
+
     fun updateContextTool(toolName: String, partial: Map<String, Any?>) {
         val toolId = ToolId.fromName(toolName) ?: return
         updateContextTool(toolId, partial)

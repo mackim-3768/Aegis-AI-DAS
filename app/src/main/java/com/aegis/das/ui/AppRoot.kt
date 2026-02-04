@@ -8,6 +8,7 @@ import androidx.compose.material.icons.outlined.DirectionsCar
 import androidx.compose.material.icons.outlined.GridView
 import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material.icons.outlined.Timeline
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
@@ -36,13 +37,19 @@ private data class TabItem(
     val content: @Composable () -> Unit
 )
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AppRoot() {
     val viewModel: MainViewModel = viewModel()
     val state by viewModel.state.collectAsState()
     val tabs = listOf(
         TabItem("Digital Twin", Icons.Outlined.DirectionsCar) { Tab1Screen(state) },
-        TabItem("Neural Grid", Icons.Outlined.GridView) { Tab2Screen(state) },
+        TabItem("Neural Grid", Icons.Outlined.GridView) {
+            Tab2Screen(
+                state = state,
+                onToolUpdated = { toolId, partial -> viewModel.updateTool(toolId, partial) }
+            )
+        },
         TabItem("Thinking Log", Icons.Outlined.Timeline) { Tab3Screen(state) },
         TabItem("System Control", Icons.Outlined.Settings) {
             Tab4Screen(
