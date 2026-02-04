@@ -1,0 +1,644 @@
+[
+  {
+    "function": {
+      "name": "trigger_steering_vibration",
+      "description": "Triggers steering wheel vibration to alert the driver.",
+      "parameters": {
+        "type": "OBJECT",
+        "properties": {
+          "level": {
+            "type": "STRING",
+            "description": "Vibration intensity level.",
+            "enum": [
+              "low",
+              "mid",
+              "high"
+            ]
+          },
+          "duration_ms": {
+            "type": "INTEGER",
+            "description": "Vibration duration in milliseconds."
+          }
+        },
+        "required": [
+          "level"
+        ]
+      }
+    }
+  },
+  {
+    "function": {
+      "name": "trigger_drowsiness_alert_sound",
+      "description": "Plays a dedicated anti-drowsiness alert sound.",
+      "parameters": {
+        "type": "OBJECT",
+        "properties": {
+          "enabled": {
+            "type": "BOOLEAN",
+            "description": "Whether to play the alert sound."
+          },
+          "level": {
+            "type": "STRING",
+            "description": "Alert sound urgency level.",
+            "enum": [
+              "low",
+              "mid",
+              "high"
+            ]
+          }
+        },
+        "required": [
+          "enabled"
+        ]
+      }
+    }
+  },
+  {
+    "function": {
+      "name": "trigger_cluster_visual_warning",
+      "description": "Shows a visual warning message in the instrument cluster.",
+      "parameters": {
+        "type": "OBJECT",
+        "properties": {
+          "message": {
+            "type": "STRING",
+            "description": "Warning message text."
+          },
+          "level": {
+            "type": "STRING",
+            "description": "Warning severity level.",
+            "enum": [
+              "info",
+              "warning",
+              "danger"
+            ]
+          }
+        },
+        "required": [
+          "message",
+          "level"
+        ]
+      }
+    }
+  },
+  {
+    "function": {
+      "name": "trigger_hud_warning",
+      "description": "Projects a warning graphic on the head-up display (HUD).",
+      "parameters": {
+        "type": "OBJECT",
+        "properties": {
+          "message": {
+            "type": "STRING",
+            "description": "HUD warning message text."
+          },
+          "level": {
+            "type": "STRING",
+            "description": "Warning severity level.",
+            "enum": [
+              "info",
+              "warning",
+              "danger"
+            ]
+          }
+        },
+        "required": [
+          "message",
+          "level"
+        ]
+      }
+    }
+  },
+  {
+    "function": {
+      "name": "trigger_voice_prompt",
+      "description": "Speaks a voice guidance prompt to the driver.",
+      "parameters": {
+        "type": "OBJECT",
+        "properties": {
+          "message": {
+            "type": "STRING",
+            "description": "Voice prompt text."
+          },
+          "level": {
+            "type": "STRING",
+            "description": "Urgency level for the prompt.",
+            "enum": [
+              "normal",
+              "warning",
+              "danger"
+            ]
+          }
+        },
+        "required": [
+          "message"
+        ]
+      }
+    }
+  },
+  {
+    "function": {
+      "name": "update_ambient_mood_lighting",
+      "description": "Updates cabin ambient mood lighting according to risk state.",
+      "parameters": {
+        "type": "OBJECT",
+        "properties": {
+          "level": {
+            "type": "STRING",
+            "description": "Lighting state mapped to risk level.",
+            "enum": [
+              "safe",
+              "warning",
+              "danger"
+            ]
+          },
+          "pulse": {
+            "type": "BOOLEAN",
+            "description": "Whether lighting should pulse."
+          }
+        },
+        "required": [
+          "level"
+        ]
+      }
+    }
+  },
+  {
+    "function": {
+      "name": "release_refreshing_scent",
+      "description": "Releases a refreshing scent to help the driver stay alert.",
+      "parameters": {
+        "type": "OBJECT",
+        "properties": {
+          "enabled": {
+            "type": "BOOLEAN",
+            "description": "Whether to release scent."
+          },
+          "duration_ms": {
+            "type": "INTEGER",
+            "description": "Scent release duration in milliseconds."
+          }
+        },
+        "required": [
+          "enabled"
+        ]
+      }
+    }
+  },
+  {
+    "function": {
+      "name": "escalate_warning_level",
+      "description": "Escalates the system-wide warning level.",
+      "parameters": {
+        "type": "OBJECT",
+        "properties": {
+          "level": {
+            "type": "STRING",
+            "description": "Target warning level.",
+            "enum": [
+              "low",
+              "mid",
+              "high",
+              "critical"
+            ]
+          }
+        },
+        "required": [
+          "level"
+        ]
+      }
+    }
+  },
+  {
+    "function": {
+      "name": "request_safe_mode",
+      "description": "Requests the vehicle to switch into a safe mode.",
+      "parameters": {
+        "type": "OBJECT",
+        "properties": {
+          "enabled": {
+            "type": "BOOLEAN",
+            "description": "Whether to request safe mode."
+          },
+          "reason": {
+            "type": "STRING",
+            "description": "Optional reason for requesting safe mode."
+          }
+        },
+        "required": [
+          "enabled"
+        ]
+      }
+    }
+  },
+  {
+    "function": {
+      "name": "log_safety_event",
+      "description": "Logs a safety-related event to blackbox/system logs.",
+      "parameters": {
+        "type": "OBJECT",
+        "properties": {
+          "event_type": {
+            "type": "STRING",
+            "description": "Event type identifier."
+          },
+          "message": {
+            "type": "STRING",
+            "description": "Event message."
+          },
+          "level": {
+            "type": "STRING",
+            "description": "Event severity level.",
+            "enum": [
+              "info",
+              "warning",
+              "danger"
+            ]
+          }
+        },
+        "required": [
+          "event_type",
+          "level"
+        ]
+      }
+    }
+  },
+  {
+    "function": {
+      "name": "trigger_navigation_notification",
+      "description": "Shows a risk notification popup on the navigation screen.",
+      "parameters": {
+        "type": "OBJECT",
+        "properties": {
+          "message": {
+            "type": "STRING",
+            "description": "Notification message."
+          },
+          "level": {
+            "type": "STRING",
+            "description": "Notification severity level.",
+            "enum": [
+              "info",
+              "warning",
+              "danger"
+            ]
+          }
+        },
+        "required": [
+          "message",
+          "level"
+        ]
+      }
+    }
+  },
+  {
+    "function": {
+      "name": "trigger_rest_recommendation",
+      "description": "Recommends taking a rest and shows the reason.",
+      "parameters": {
+        "type": "OBJECT",
+        "properties": {
+          "reason": {
+            "type": "STRING",
+            "description": "Reason for recommending rest."
+          },
+          "level": {
+            "type": "STRING",
+            "description": "Urgency level.",
+            "enum": [
+              "low",
+              "mid",
+              "high"
+            ]
+          }
+        },
+        "required": [
+          "reason"
+        ]
+      }
+    }
+  },
+  {
+    "function": {
+      "name": "pre_tension_safety_belts",
+      "description": "Pre-tensions safety belts to secure occupants.",
+      "parameters": {
+        "type": "OBJECT",
+        "properties": {
+          "enabled": {
+            "type": "BOOLEAN",
+            "description": "Whether to pre-tension belts."
+          },
+          "level": {
+            "type": "STRING",
+            "description": "Pre-tension intensity level.",
+            "enum": [
+              "low",
+              "mid",
+              "high"
+            ]
+          }
+        },
+        "required": [
+          "enabled"
+        ]
+      }
+    }
+  },
+  {
+    "function": {
+      "name": "activate_hazard_warning_signals",
+      "description": "Activates hazard warning signals (blinkers) automatically.",
+      "parameters": {
+        "type": "OBJECT",
+        "properties": {
+          "enabled": {
+            "type": "BOOLEAN",
+            "description": "Whether to activate hazard warning signals."
+          },
+          "duration_ms": {
+            "type": "INTEGER",
+            "description": "How long the hazard signals should stay active."
+          }
+        },
+        "required": [
+          "enabled"
+        ]
+      }
+    }
+  },
+  {
+    "function": {
+      "name": "execute_emergency_stop_pull_over",
+      "description": "Executes an emergency stop and pulls over to a safe location.",
+      "parameters": {
+        "type": "OBJECT",
+        "properties": {
+          "enabled": {
+            "type": "BOOLEAN",
+            "description": "Whether to initiate emergency stop/pull-over."
+          },
+          "reason": {
+            "type": "STRING",
+            "description": "Reason for emergency stop/pull-over."
+          }
+        },
+        "required": [
+          "enabled"
+        ]
+      }
+    }
+  },
+  {
+    "function": {
+      "name": "adjust_seat_bolster_firmness",
+      "description": "Adjusts seat bolster firmness to secure the driver's body during dynamic driving.",
+      "parameters": {
+        "type": "OBJECT",
+        "properties": {
+          "level": {
+            "type": "STRING",
+            "description": "Bolster firmness level.",
+            "enum": [
+              "low",
+              "mid",
+              "high"
+            ]
+          }
+        },
+        "required": [
+          "level"
+        ]
+      }
+    }
+  },
+  {
+    "function": {
+      "name": "control_window_and_sunroof",
+      "description": "Controls window and sunroof opening/closing for ventilation or weather response.",
+      "parameters": {
+        "type": "OBJECT",
+        "properties": {
+          "target": {
+            "type": "STRING",
+            "description": "Control target.",
+            "enum": [
+              "window",
+              "sunroof",
+              "all"
+            ]
+          },
+          "action": {
+            "type": "STRING",
+            "description": "Requested action.",
+            "enum": [
+              "open",
+              "close",
+              "vent"
+            ]
+          }
+        },
+        "required": [
+          "target",
+          "action"
+        ]
+      }
+    }
+  },
+  {
+    "function": {
+      "name": "trigger_emergency_call",
+      "description": "Triggers an e-Call emergency call after an accident.",
+      "parameters": {
+        "type": "OBJECT",
+        "properties": {
+          "enabled": {
+            "type": "BOOLEAN",
+            "description": "Whether to place an emergency call."
+          },
+          "level": {
+            "type": "STRING",
+            "description": "Urgency level.",
+            "enum": [
+              "high",
+              "critical"
+            ]
+          }
+        },
+        "required": [
+          "enabled"
+        ]
+      }
+    }
+  },
+  {
+    "function": {
+      "name": "trigger_ground_projection_warning",
+      "description": "Projects a pedestrian/caution warning graphic onto the ground.",
+      "parameters": {
+        "type": "OBJECT",
+        "properties": {
+          "message": {
+            "type": "STRING",
+            "description": "Projection message identifier/text."
+          },
+          "level": {
+            "type": "STRING",
+            "description": "Projection severity level.",
+            "enum": [
+              "warning",
+              "danger"
+            ]
+          }
+        },
+        "required": [
+          "message",
+          "level"
+        ]
+      }
+    }
+  },
+  {
+    "function": {
+      "name": "emit_external_pedestrian_alert",
+      "description": "Emits an external pedestrian alert sound.",
+      "parameters": {
+        "type": "OBJECT",
+        "properties": {
+          "enabled": {
+            "type": "BOOLEAN",
+            "description": "Whether to emit the external alert."
+          },
+          "level": {
+            "type": "STRING",
+            "description": "Alert intensity level.",
+            "enum": [
+              "low",
+              "mid",
+              "high"
+            ]
+          }
+        },
+        "required": [
+          "enabled"
+        ]
+      }
+    }
+  },
+  {
+    "function": {
+      "name": "deploy_active_pedestrian_protection",
+      "description": "Deploys active pedestrian protection mechanisms to reduce impact severity.",
+      "parameters": {
+        "type": "OBJECT",
+        "properties": {
+          "enabled": {
+            "type": "BOOLEAN",
+            "description": "Whether to deploy active pedestrian protection."
+          }
+        },
+        "required": [
+          "enabled"
+        ]
+      }
+    }
+  },
+  {
+    "function": {
+      "name": "activate_cabin_purification",
+      "description": "Activates cabin air purification mode.",
+      "parameters": {
+        "type": "OBJECT",
+        "properties": {
+          "enabled": {
+            "type": "BOOLEAN",
+            "description": "Whether to activate purification."
+          },
+          "level": {
+            "type": "STRING",
+            "description": "Purification intensity level.",
+            "enum": [
+              "low",
+              "mid",
+              "high"
+            ]
+          }
+        },
+        "required": [
+          "enabled"
+        ]
+      }
+    }
+  },
+  {
+    "function": {
+      "name": "switch_cabin_air_circulation",
+      "description": "Switches cabin air circulation mode between recirculation and fresh air.",
+      "parameters": {
+        "type": "OBJECT",
+        "properties": {
+          "mode": {
+            "type": "STRING",
+            "description": "Target air circulation mode.",
+            "enum": [
+              "recirculate",
+              "fresh_air"
+            ]
+          }
+        },
+        "required": [
+          "mode"
+        ]
+      }
+    }
+  },
+  {
+    "function": {
+      "name": "activate_wellness_massage",
+      "description": "Activates the driver's wellness massage feature.",
+      "parameters": {
+        "type": "OBJECT",
+        "properties": {
+          "enabled": {
+            "type": "BOOLEAN",
+            "description": "Whether to activate massage."
+          },
+          "duration_ms": {
+            "type": "INTEGER",
+            "description": "Massage duration in milliseconds."
+          }
+        },
+        "required": [
+          "enabled"
+        ]
+      }
+    }
+  },
+  {
+    "function": {
+      "name": "set_valet_mode_limitations",
+      "description": "Enables limitations for valet mode (performance/personal data restrictions).",
+      "parameters": {
+        "type": "OBJECT",
+        "properties": {
+          "enabled": {
+            "type": "BOOLEAN",
+            "description": "Whether to enable valet mode limitations."
+          },
+          "level": {
+            "type": "STRING",
+            "description": "Limitation strictness level.",
+            "enum": [
+              "low",
+              "mid",
+              "high"
+            ]
+          }
+        },
+        "required": [
+          "enabled"
+        ]
+      }
+    }
+  }
+]
