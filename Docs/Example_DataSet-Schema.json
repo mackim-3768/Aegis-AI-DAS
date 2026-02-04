@@ -1,0 +1,329 @@
+[
+  {
+    "metadata": "train",
+    "tools": [
+      {
+        "function": {
+          "name": "open_wifi_settings",
+          "description": "Opens the Wi-Fi settings.",
+          "parameters": {
+            "type": "OBJECT",
+            "properties": {}
+          }
+        }
+      },
+      {
+        "function": {
+          "name": "turn_on_flashlight",
+          "description": "Turns the flashlight on.",
+          "parameters": {
+            "type": "OBJECT",
+            "properties": {}
+          }
+        }
+      },
+      {
+        "function": {
+          "name": "create_contact",
+          "description": "Creates a contact in the phone's contact list.",
+          "parameters": {
+            "type": "OBJECT",
+            "properties": {
+              "last_name": {
+                "type": "STRING",
+                "description": "The last name of the contact."
+              },
+              "first_name": {
+                "type": "STRING",
+                "description": "The first name of the contact."
+              },
+              "email": {
+                "type": "STRING",
+                "description": "The email address of the contact."
+              },
+              "phone_number": {
+                "type": "STRING",
+                "description": "The phone number of the contact."
+              }
+            },
+            "required": [
+              "first_name",
+              "last_name"
+            ]
+          }
+        }
+      },
+      {
+        "function": {
+          "name": "show_map",
+          "description": "Shows a location on the map.",
+          "parameters": {
+            "type": "OBJECT",
+            "properties": {
+              "query": {
+                "type": "STRING",
+                "description": "The location to search for. May be the name of a place, a business, or an address."
+              }
+            },
+            "required": [
+              "query"
+            ]
+          }
+        }
+      },
+      {
+        "function": {
+          "name": "create_calendar_event",
+          "description": "Creates a new calendar event.",
+          "parameters": {
+            "type": "OBJECT",
+            "properties": {
+              "datetime": {
+                "type": "STRING",
+                "description": "The date and time of the event in the format YYYY-MM-DDTHH:MM:SS."
+              },
+              "title": {
+                "type": "STRING",
+                "description": "The title of the event."
+              }
+            },
+            "required": [
+              "title",
+              "datetime"
+            ]
+          }
+        }
+      },
+      {
+        "function": {
+          "name": "turn_off_flashlight",
+          "description": "Turns the flashlight off.",
+          "parameters": {
+            "type": "OBJECT",
+            "properties": {}
+          }
+        }
+      },
+      {
+        "function": {
+          "name": "send_email",
+          "description": "Sends an email.",
+          "parameters": {
+            "type": "OBJECT",
+            "properties": {
+              "to": {
+                "type": "STRING",
+                "description": "The email address of the recipient."
+              },
+              "body": {
+                "type": "STRING",
+                "description": "The body of the email."
+              },
+              "subject": {
+                "type": "STRING",
+                "description": "The subject of the email."
+              }
+            },
+            "required": [
+              "to",
+              "subject"
+            ]
+          }
+        }
+      }
+    ],
+    "messages": [
+      {
+        "role": "developer",
+        "content": "Current date and time given in YYYY-MM-DDTHH:MM:SS format: 2025-02-18T01:43:40\nDay of week is Tuesday\nYou are a model that can do function calling with the following functions\n"
+      },
+      {
+        "role": "user",
+        "content": "Please create a calendar event titled 'Project Alpha Review' for next Wednesday, February 26th, at 11:00 AM."
+      },
+      {
+        "role": "assistant",
+        "tool_calls": [
+          {
+            "function": {
+              "name": "create_calendar_event",
+              "arguments": {
+                "datetime": "2025-02-26T11:00:00",
+                "title": "Project Alpha Review"
+              }
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "metadata": "eval",
+    "tools": [
+      {
+        "function": {
+          "name": "create_contact",
+          "description": "Creates a contact in the phone's contact list.",
+          "parameters": {
+            "type": "OBJECT",
+            "properties": {
+              "email": {
+                "type": "STRING",
+                "description": "The email address of the contact."
+              },
+              "phone_number": {
+                "type": "STRING",
+                "description": "The phone number of the contact."
+              },
+              "last_name": {
+                "type": "STRING",
+                "description": "The last name of the contact."
+              },
+              "first_name": {
+                "type": "STRING",
+                "description": "The first name of the contact."
+              }
+            },
+            "required": [
+              "first_name",
+              "last_name"
+            ]
+          }
+        }
+      },
+      {
+        "function": {
+          "name": "open_wifi_settings",
+          "description": "Opens the Wi-Fi settings.",
+          "parameters": {
+            "type": "OBJECT",
+            "properties": {}
+          }
+        }
+      },
+      {
+        "function": {
+          "name": "send_email",
+          "description": "Sends an email.",
+          "parameters": {
+            "type": "OBJECT",
+            "properties": {
+              "subject": {
+                "type": "STRING",
+                "description": "The subject of the email."
+              },
+              "body": {
+                "type": "STRING",
+                "description": "The body of the email."
+              },
+              "to": {
+                "type": "STRING",
+                "description": "The email address of the recipient."
+              }
+            },
+            "required": [
+              "to",
+              "subject"
+            ]
+          }
+        }
+      },
+      {
+        "function": {
+          "name": "turn_on_flashlight",
+          "description": "Turns the flashlight on.",
+          "parameters": {
+            "type": "OBJECT",
+            "properties": {}
+          }
+        }
+      },
+      {
+        "function": {
+          "name": "turn_off_flashlight",
+          "description": "Turns the flashlight off.",
+          "parameters": {
+            "type": "OBJECT",
+            "properties": {}
+          }
+        }
+      },
+      {
+        "function": {
+          "name": "create_calendar_event",
+          "description": "Creates a new calendar event.",
+          "parameters": {
+            "type": "OBJECT",
+            "properties": {
+              "title": {
+                "type": "STRING",
+                "description": "The title of the event."
+              },
+              "datetime": {
+                "type": "STRING",
+                "description": "The date and time of the event in the format YYYY-MM-DDTHH:MM:SS."
+              }
+            },
+            "required": [
+              "title",
+              "datetime"
+            ]
+          }
+        }
+      },
+      {
+        "function": {
+          "name": "show_map",
+          "description": "Shows a location on the map.",
+          "parameters": {
+            "type": "OBJECT",
+            "properties": {
+              "query": {
+                "type": "STRING",
+                "description": "The location to search for. May be the name of a place, a business, or an address."
+              }
+            },
+            "required": [
+              "query"
+            ]
+          }
+        }
+      }
+    ],
+    "messages": [
+      {
+        "role": "developer",
+        "content": "Current date and time given in YYYY-MM-DDTHH:MM:SS format: 2025-05-13T02:46:52\nDay of week is Tuesday\nYou are a model that can do function calling with the following functions\n"
+      },
+      {
+        "role": "user",
+        "content": "Please save a new contact for Sofia Rodriguez with the phone number +1 555-234-9876 and email sofia.rodriguez@innotek.com. Also, schedule a calendar event titled 'Follow-up meeting with Sofia' for May 23rd, 2025 at 10:00 AM."
+      },
+      {
+        "role": "assistant",
+        "tool_calls": [
+          {
+            "function": {
+              "name": "create_contact",
+              "arguments": {
+                "first_name": "Sofia",
+                "phone_number": "+1 555-234-9876",
+                "email": "sofia.rodriguez@innotek.com",
+                "last_name": "Rodriguez"
+              }
+            }
+          },
+          {
+            "function": {
+              "name": "create_calendar_event",
+              "arguments": {
+                "title": "Follow-up meeting with Sofia",
+                "datetime": "2025-05-23T10:00:00"
+              }
+            }
+          }
+        ]
+      }
+    ]
+  }
+]
