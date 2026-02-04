@@ -81,8 +81,10 @@ internal fun NeuralGridScreen(
         ToolEditBottomSheet(
             toolState = editingState,
             onDismissRequest = { editingToolId = null },
-            onFieldUpdated = { key, value ->
-                onToolUpdated(editingState.id, mapOf(key to value))
+            onApplyChanges = { changes ->
+                if (changes.isNotEmpty()) {
+                    onToolUpdated(editingState.id, changes)
+                }
             }
         )
     }

@@ -210,54 +210,152 @@ private fun DrawScope.drawBase(viewMode: ViewMode) {
     val stroke = Stroke(width = 3f)
     val base = Color.Black.copy(alpha = 0.08f)
     val accent = Color.Black.copy(alpha = 0.14f)
+    val glass = Color.Black.copy(alpha = 0.05f)
 
     val w = size.width
     val h = size.height
 
     when (viewMode) {
         ViewMode.TOP -> {
-            val carWidth = w * 0.32f
-            val carHeight = h * 0.62f
+            val carWidth = w * 0.44f
+            val carHeight = h * 0.78f
             val topLeft = Offset((w - carWidth) / 2f, (h - carHeight) / 2f)
+            val corner = CornerRadius(minOf(w, h) * 0.14f, minOf(w, h) * 0.14f)
 
             drawRoundRect(
                 color = base,
                 topLeft = topLeft,
                 size = Size(carWidth, carHeight),
-                cornerRadius = CornerRadius(40f, 40f)
+                cornerRadius = corner
             )
             drawRoundRect(
                 color = accent,
                 topLeft = topLeft,
                 size = Size(carWidth, carHeight),
-                cornerRadius = CornerRadius(40f, 40f),
+                cornerRadius = corner,
                 style = stroke
+            )
+
+            val roofInsetX = carWidth * 0.14f
+            val roofInsetY = carHeight * 0.14f
+            val roofTopLeft = Offset(topLeft.x + roofInsetX, topLeft.y + roofInsetY)
+            val roofSize = Size(carWidth - roofInsetX * 2f, carHeight * 0.46f)
+            drawRoundRect(
+                color = glass,
+                topLeft = roofTopLeft,
+                size = roofSize,
+                cornerRadius = CornerRadius(corner.x * 0.75f, corner.y * 0.75f)
+            )
+            drawRoundRect(
+                color = accent.copy(alpha = 0.10f),
+                topLeft = roofTopLeft,
+                size = roofSize,
+                cornerRadius = CornerRadius(corner.x * 0.75f, corner.y * 0.75f),
+                style = Stroke(width = 2f)
+            )
+
+            val wheelWidth = carWidth * 0.18f
+            val wheelHeight = carHeight * 0.12f
+            val wheelCorner = CornerRadius(wheelHeight * 0.6f, wheelHeight * 0.6f)
+            val wheelXs = listOf(topLeft.x - wheelWidth * 0.35f, topLeft.x + carWidth - wheelWidth * 0.65f)
+            val wheelYs = listOf(topLeft.y + carHeight * 0.18f, topLeft.y + carHeight * 0.70f)
+            wheelXs.forEach { wx ->
+                wheelYs.forEach { wy ->
+                    drawRoundRect(
+                        color = accent.copy(alpha = 0.22f),
+                        topLeft = Offset(wx, wy),
+                        size = Size(wheelWidth, wheelHeight),
+                        cornerRadius = wheelCorner
+                    )
+                }
+            }
+
+            val centerX = w / 2f
+            drawLine(
+                color = accent.copy(alpha = 0.10f),
+                start = Offset(centerX, topLeft.y + carHeight * 0.10f),
+                end = Offset(centerX, topLeft.y + carHeight * 0.90f),
+                strokeWidth = 2f
+            )
+
+            val headLightR = minOf(w, h) * 0.018f
+            drawCircle(
+                color = accent.copy(alpha = 0.16f),
+                radius = headLightR,
+                center = Offset(topLeft.x + carWidth * 0.30f, topLeft.y + carHeight * 0.06f)
+            )
+            drawCircle(
+                color = accent.copy(alpha = 0.16f),
+                radius = headLightR,
+                center = Offset(topLeft.x + carWidth * 0.70f, topLeft.y + carHeight * 0.06f)
             )
         }
 
         ViewMode.INTERIOR -> {
-            val cabinWidth = w * 0.82f
-            val cabinHeight = h * 0.52f
+            val cabinWidth = w * 0.86f
+            val cabinHeight = h * 0.56f
             val topLeft = Offset((w - cabinWidth) / 2f, (h - cabinHeight) / 2f)
+            val corner = CornerRadius(minOf(w, h) * 0.10f, minOf(w, h) * 0.10f)
 
             drawRoundRect(
                 color = base,
                 topLeft = topLeft,
                 size = Size(cabinWidth, cabinHeight),
-                cornerRadius = CornerRadius(28f, 28f)
+                cornerRadius = corner
             )
             drawRoundRect(
                 color = accent,
                 topLeft = topLeft,
                 size = Size(cabinWidth, cabinHeight),
-                cornerRadius = CornerRadius(28f, 28f),
+                cornerRadius = corner,
                 style = stroke
             )
 
+            val dashHeight = cabinHeight * 0.18f
+            drawRoundRect(
+                color = accent.copy(alpha = 0.10f),
+                topLeft = Offset(topLeft.x + cabinWidth * 0.08f, topLeft.y + cabinHeight * 0.08f),
+                size = Size(cabinWidth * 0.84f, dashHeight),
+                cornerRadius = CornerRadius(dashHeight * 0.6f, dashHeight * 0.6f)
+            )
+
+            val seatWidth = cabinWidth * 0.26f
+            val seatHeight = cabinHeight * 0.46f
+            val seatY = topLeft.y + cabinHeight * 0.34f
+            val seatCorner = CornerRadius(seatWidth * 0.25f, seatWidth * 0.25f)
+
+            drawRoundRect(
+                color = accent.copy(alpha = 0.14f),
+                topLeft = Offset(topLeft.x + cabinWidth * 0.18f, seatY),
+                size = Size(seatWidth, seatHeight),
+                cornerRadius = seatCorner
+            )
+            drawRoundRect(
+                color = accent.copy(alpha = 0.14f),
+                topLeft = Offset(topLeft.x + cabinWidth * 0.56f, seatY),
+                size = Size(seatWidth, seatHeight),
+                cornerRadius = seatCorner
+            )
+
+            val wheelCenter = Offset(topLeft.x + cabinWidth * 0.33f, topLeft.y + cabinHeight * 0.36f)
+            val wheelRadius = minOf(w, h) * 0.10f
             drawCircle(
-                color = accent,
-                radius = minOf(w, h) * 0.12f,
-                center = Offset(w / 2f, h / 2f)
+                color = accent.copy(alpha = 0.18f),
+                radius = wheelRadius,
+                center = wheelCenter,
+                style = Stroke(width = 8f)
+            )
+            drawCircle(
+                color = accent.copy(alpha = 0.10f),
+                radius = wheelRadius * 0.45f,
+                center = wheelCenter
+            )
+
+            drawRoundRect(
+                color = glass,
+                topLeft = Offset(topLeft.x + cabinWidth * 0.40f, topLeft.y + cabinHeight * 0.22f),
+                size = Size(cabinWidth * 0.20f, cabinHeight * 0.56f),
+                cornerRadius = CornerRadius(corner.x * 0.6f, corner.y * 0.6f)
             )
         }
     }

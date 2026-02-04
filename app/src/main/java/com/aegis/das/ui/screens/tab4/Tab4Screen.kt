@@ -4,10 +4,8 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.RadioButton
@@ -51,9 +49,12 @@ fun Tab4Screen(
 
         Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
             Text("Scenario Injector", style = MaterialTheme.typography.bodyMedium)
-            LazyRow(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-                items(scenarios) { scenario ->
-                    Button(onClick = { onScenarioSelected(scenario) }, modifier = Modifier.width(180.dp)) {
+            Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
+                scenarios.forEach { scenario ->
+                    Button(
+                        onClick = { onScenarioSelected(scenario) },
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
                         Text(scenario.label, style = MaterialTheme.typography.labelLarge)
                     }
                 }

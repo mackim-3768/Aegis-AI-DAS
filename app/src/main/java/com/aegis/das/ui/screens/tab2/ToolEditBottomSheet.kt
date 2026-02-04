@@ -17,6 +17,7 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Slider
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -35,9 +36,13 @@ import kotlin.math.roundToInt
 internal fun ToolEditBottomSheet(
     toolState: ToolState,
     onDismissRequest: () -> Unit,
-    onFieldUpdated: (String, Any?) -> Unit
+    onApplyChanges: (Map<String, Any?>) -> Unit
 ) {
     ModalBottomSheet(onDismissRequest = onDismissRequest) {
+        var draft by remember(toolState.id, toolState.updatedAt) {
+            mutableStateOf<Map<String, Any?>>(toolState.payload)
+        }
+
         Column(
             modifier = Modifier
                 .fillMaxWidth()
@@ -48,17 +53,35 @@ internal fun ToolEditBottomSheet(
 
             val sortedKeys = toolState.payload.keys.sorted()
             sortedKeys.forEach { key ->
-                val value = toolState.payload[key]
+                val value = draft[key]
                 FieldEditor(
                     toolId = toolState.id,
                     fieldKey = key,
                     value = value,
-                    onValueChanged = { onFieldUpdated(key, it) }
+                    onValueChanged = { nextValue ->
+                        draft = draft.toMutableMap().apply { put(key, nextValue) }
+                    }
                 )
             }
 
-            Button(onClick = onDismissRequest, modifier = Modifier.fillMaxWidth()) {
-                Text("Close")
+            val hasChanges = draft != toolState.payload
+            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
+                TextButton(onClick = onDismissRequest) {
+                    Text("Close")
+                }
+
+                Button(
+                    onClick = {
+                        val changes = draft.filter { (k, v) -> toolState.payload[k] != v }
+                        if (changes.isNotEmpty()) {
+                            onApplyChanges(changes)
+                        }
+                        onDismissRequest()
+                    },
+                    enabled = hasChanges
+                ) {
+                    Text("Apply")
+                }
             }
         }
     }
