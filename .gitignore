@@ -1,2 +1,12 @@
 DataSet/*.jsonl
 DataSet/**/*.jsonl
+
+local.properties
+
+.gradle/
+**/build/
+
+venv/
+
+gradle/wrapper/gradle-wrapper-plugin.jar
+gradle/wrapper/gradle-wrapper-shared.jar

@@ -25,7 +25,7 @@
 APP_NAME="Gradle"
 APP_BASE_NAME=`basename "$0"`
 
-DEFAULT_JVM_OPTS='"-Xmx64m" "-Xms64m"'
+DEFAULT_JVM_OPTS='-Xmx64m -Xms64m'
 
 # Use the maximum available, or set MAX_FD != -1 to use that value.
 MAX_FD="maximum"
@@ -61,8 +61,6 @@ case "`uname`" in
     ;;
 esac
 
-CLASSPATH="$APP_HOME/gradle/wrapper/gradle-wrapper.jar"
-
 # Resolve links: $0 may be a link
 APP_PATH="$0"
 
@@ -80,6 +78,8 @@ done
 
 APP_HOME=`dirname "$APP_PATH"`
 APP_HOME=`cd "$APP_HOME" && pwd -P`
+
+CLASSPATH="$APP_HOME/gradle/wrapper/gradle-wrapper.jar"
 
 # Collect all arguments for the java command, following the shell quoting and substitution rules
 save () {
