@@ -26,6 +26,7 @@ internal fun ToolCard(
     toolState: ToolState,
     enabled: Boolean,
     onClick: () -> Unit,
+    onDisabledClick: (() -> Unit)? = null,
     modifier: Modifier = Modifier
 ) {
     val primaryKey = when {
@@ -36,11 +37,13 @@ internal fun ToolCard(
     }
     val primaryValue = primaryKey?.let { toolState.payload[it] }
 
+    val clickHandler = if (enabled) onClick else onDisabledClick
+
     GlassCard(
         modifier = modifier
             .fillMaxWidth()
             .height(110.dp),
-        onClick = if (enabled) onClick else null
+        onClick = clickHandler
     ) {
         Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
             Row(
