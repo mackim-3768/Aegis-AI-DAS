@@ -26,10 +26,15 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import com.aegis.das.domain.state.ToolState
 import com.aegis.das.domain.tools.ToolId
+import com.aegis.das.ui.screens.tab3.JsonFormatter
 import kotlin.math.roundToInt
+import org.json.JSONArray
+import org.json.JSONObject
+import org.json.JSONTokener
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -56,6 +61,7 @@ internal fun ToolEditBottomSheet(
                 val value = draft[key]
                 FieldEditor(
                     toolId = toolState.id,
+                    sheetKey = toolState.updatedAt,
                     fieldKey = key,
                     value = value,
                     onValueChanged = { nextValue ->
@@ -87,9 +93,38 @@ internal fun ToolEditBottomSheet(
     }
 }
 
+private fun JSONObject.toMap(): Map<String, Any?> {
+    val iterator = keys()
+    val output = linkedMapOf<String, Any?>()
+    while (iterator.hasNext()) {
+        val key = iterator.next()
+        output[key] = normalizeJsonValue(get(key))
+    }
+    return output
+}
+
+private fun JSONArray.toList(): List<Any?> {
+    val output = ArrayList<Any?>(length())
+    for (i in 0 until length()) {
+        output.add(normalizeJsonValue(get(i)))
+    }
+    return output
+}
+
+private fun normalizeJsonValue(value: Any?): Any? {
+    return when (value) {
+        null -> null
+        JSONObject.NULL -> null
+        is JSONObject -> value.toMap()
+        is JSONArray -> value.toList()
+        else -> value
+    }
+}
+
 @Composable
 private fun FieldEditor(
     toolId: ToolId,
+    sheetKey: Long,
     fieldKey: String,
     value: Any?,
     onValueChanged: (Any?) -> Unit
@@ -134,10 +169,69 @@ private fun FieldEditor(
         )
 
         else -> {
-            Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
-                Text(fieldKey, style = MaterialTheme.typography.bodyMedium)
-                Text(value?.toString() ?: "null", style = MaterialTheme.typography.bodySmall)
-            }
+            JsonValueEditor(
+                toolId = toolId,
+                sheetKey = sheetKey,
+                fieldKey = fieldKey,
+                value = value,
+                onValueChanged = onValueChanged
+            )
+        }
+    }
+}
+
+@Composable
+private fun JsonValueEditor(
+    toolId: ToolId,
+    sheetKey: Long,
+    fieldKey: String,
+    value: Any?,
+    onValueChanged: (Any?) -> Unit
+) {
+    var text by remember(toolId, sheetKey, fieldKey) {
+        mutableStateOf(JsonFormatter.format(value))
+    }
+    var error by remember(toolId, sheetKey, fieldKey) { mutableStateOf<String?>(null) }
+
+    Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+        Text(fieldKey, style = MaterialTheme.typography.bodyMedium)
+
+        OutlinedTextField(
+            value = text,
+            onValueChange = { next ->
+                text = next
+                val trimmed = next.trim()
+                if (trimmed.isEmpty()) {
+                    error = null
+                    onValueChanged(null)
+                    return@OutlinedTextField
+                }
+
+                try {
+                    val parsed = JSONTokener(trimmed).nextValue()
+                    val normalized: Any? = when (parsed) {
+                        is JSONObject -> parsed.toMap()
+                        is JSONArray -> parsed.toList()
+                        JSONObject.NULL -> null
+                        else -> parsed
+                    }
+                    error = null
+                    onValueChanged(normalized)
+                } catch (t: Throwable) {
+                    error = t.message ?: "Invalid JSON"
+                }
+            },
+            modifier = Modifier.fillMaxWidth(),
+            singleLine = false,
+            textStyle = MaterialTheme.typography.bodySmall.copy(fontFamily = FontFamily.Monospace)
+        )
+
+        if (error != null) {
+            Text(
+                text = error.orEmpty(),
+                style = MaterialTheme.typography.labelSmall,
+                color = MaterialTheme.colorScheme.error.copy(alpha = 0.9f)
+            )
         }
     }
 }

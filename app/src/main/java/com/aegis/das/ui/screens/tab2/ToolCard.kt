@@ -3,6 +3,7 @@ package com.aegis.das.ui.screens.tab2
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -14,6 +15,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.aegis.das.domain.state.ToolState
 import com.aegis.das.domain.tools.ToolKind
@@ -35,7 +37,9 @@ internal fun ToolCard(
     val primaryValue = primaryKey?.let { toolState.payload[it] }
 
     GlassCard(
-        modifier = modifier.fillMaxWidth(),
+        modifier = modifier
+            .fillMaxWidth()
+            .height(110.dp),
         onClick = if (enabled) onClick else null
     ) {
         Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
@@ -53,19 +57,28 @@ internal fun ToolCard(
                     }
                 ) {}
 
-                Text(toolState.id.toolName, style = MaterialTheme.typography.titleSmall)
+                Text(
+                    text = toolState.id.toolName,
+                    style = MaterialTheme.typography.titleSmall,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
+                )
             }
 
             if (primaryKey != null) {
                 Text(
                     text = "$primaryKey: $primaryValue",
-                    style = MaterialTheme.typography.bodyMedium
+                    style = MaterialTheme.typography.bodyMedium,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
                 )
             }
 
             Text(
                 text = "updatedAt=${toolState.updatedAt}",
-                style = MaterialTheme.typography.labelSmall
+                style = MaterialTheme.typography.labelSmall,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis
             )
         }
     }
