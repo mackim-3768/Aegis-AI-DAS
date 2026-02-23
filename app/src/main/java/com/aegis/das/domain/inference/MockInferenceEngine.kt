@@ -73,7 +73,53 @@ class MockInferenceEngine : InferenceEngine {
             )
         }
 
-        // Rule 2: Forward collision
+        // Rule 2: Pedal misapplication (sudden unintended acceleration)
+        val pedalMisapplicationDetected = boolValue(ToolId.GET_PEDAL_MISAPPLICATION_RISK, "value")
+        val pedalMisapplicationLevel = stringValue(ToolId.GET_PEDAL_MISAPPLICATION_RISK, "level", "low")
+        val currentSpeed = numberValue(ToolId.GET_VEHICLE_SPEED, "value", 0.0)
+        if (pedalMisapplicationDetected && pedalMisapplicationLevel in listOf("high", "critical")) {
+            val ruleSeverity = 3
+            val interventionDurationMs = if (currentSpeed <= 30.0) 3000 else 5000
+            severity = maxOf(severity, ruleSeverity)
+            eventMessages += "Pedal misapplication"
+            addAction(
+                ToolId.LIMIT_ENGINE_TORQUE,
+                mapOf(
+                    "enabled" to true,
+                    "max_ratio" to 0.2,
+                    "duration_ms" to interventionDurationMs,
+                    "reason" to "pedal_misapplication"
+                ),
+                ruleSeverity
+            )
+            addAction(
+                ToolId.EXECUTE_EMERGENCY_STOP_PULL_OVER,
+                mapOf("enabled" to true, "reason" to "pedal_misapplication"),
+                ruleSeverity
+            )
+            addAction(
+                ToolId.TRIGGER_HUD_WARNING,
+                mapOf("message" to "급가속 오조작 감지", "level" to "danger"),
+                ruleSeverity
+            )
+            addAction(
+                ToolId.TRIGGER_CLUSTER_VISUAL_WARNING,
+                mapOf("message" to "PEDAL MISAPPLICATION", "level" to "danger"),
+                ruleSeverity
+            )
+            addAction(
+                ToolId.TRIGGER_VOICE_PROMPT,
+                mapOf("message" to "페달 오조작이 감지되어 출력을 제한하고 긴급 제동을 수행합니다.", "level" to "danger"),
+                ruleSeverity
+            )
+            addAction(
+                ToolId.ACTIVATE_HAZARD_WARNING_SIGNALS,
+                mapOf("enabled" to true, "duration_ms" to interventionDurationMs),
+                ruleSeverity
+            )
+        }
+
+        // Rule 3: Forward collision
         val collisionLevel = stringValue(ToolId.GET_FORWARD_COLLISION_RISK, "level", "low")
         if (collisionLevel == "mid" || collisionLevel == "high") {
             val ruleSeverity = if (collisionLevel == "high") 3 else 2
@@ -108,7 +154,7 @@ class MockInferenceEngine : InferenceEngine {
             }
         }
 
-        // Rule 3: System intrusion
+        // Rule 4: System intrusion
         val intrusionLevel = stringValue(ToolId.GET_VEHICLE_SYSTEM_INTRUSION_STATUS, "level", "low")
         if (intrusionLevel == "high" || intrusionLevel == "critical") {
             val ruleSeverity = if (intrusionLevel == "critical") 3 else 2
@@ -126,7 +172,7 @@ class MockInferenceEngine : InferenceEngine {
             )
         }
 
-        // Rule 4: Weather & visibility
+        // Rule 5: Weather & visibility
         val weather = stringValue(ToolId.GET_DRIVING_ENVIRONMENT, "weather", "clear")
         val visibility = stringValue(ToolId.GET_DRIVING_ENVIRONMENT, "visibility_level", "good")
         val roadCondition = stringValue(ToolId.GET_DRIVING_ENVIRONMENT, "road_condition", "dry")
@@ -156,7 +202,7 @@ class MockInferenceEngine : InferenceEngine {
             )
         }
 
-        // Rule 5: Low friction
+        // Rule 6: Low friction
         val frictionLevel = stringValue(ToolId.GET_ROAD_SURFACE_FRICTION, "level", "high")
         if (frictionLevel == "low" || frictionLevel == "mid") {
             val ruleSeverity = if (frictionLevel == "low") 2 else 1
@@ -184,7 +230,7 @@ class MockInferenceEngine : InferenceEngine {
             )
         }
 
-        // Rule 6: Emergency vehicle proximity
+        // Rule 7: Emergency vehicle proximity
         val emergencyVehicle = boolValue(ToolId.GET_V2X_EMERGENCY_VEHICLE_PROXIMITY, "value")
         if (emergencyVehicle) {
             val distance = numberValue(ToolId.GET_V2X_EMERGENCY_VEHICLE_PROXIMITY, "distance", 0.0)

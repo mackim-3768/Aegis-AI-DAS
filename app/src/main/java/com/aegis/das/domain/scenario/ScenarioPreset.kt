@@ -21,6 +21,14 @@ object ScenarioPresets {
             )
         ),
         ScenarioPreset(
+            ScenarioId.PEDAL_MISAPPLICATION,
+            mapOf(
+                ToolId.GET_PEDAL_MISAPPLICATION_RISK to mapOf("value" to true, "level" to "critical", "confidence" to 0.96),
+                ToolId.GET_VEHICLE_SPEED to mapOf("value" to 42.0),
+                ToolId.GET_FORWARD_COLLISION_RISK to mapOf("score" to 0.81, "level" to "high", "confidence" to 0.87)
+            )
+        ),
+        ScenarioPreset(
             ScenarioId.FORWARD_COLLISION,
             mapOf(
                 ToolId.GET_FORWARD_COLLISION_RISK to mapOf("score" to 0.92, "level" to "high", "confidence" to 0.9),

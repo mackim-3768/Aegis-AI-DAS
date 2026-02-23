@@ -7,6 +7,7 @@ internal object ToolFieldMetadata {
         "heart_rate" -> 40f..180f
         "body_temperature" -> 34f..40f
         "value" -> 0f..200f
+        "max_ratio" -> 0f..1f
         "distance" -> 0f..500f
         "temperature" -> -10f..90f
         "time_to_change" -> 0f..120f

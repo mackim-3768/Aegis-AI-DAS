@@ -834,5 +834,41 @@
         ]
       }
     }
+  },
+  {
+    "function": {
+      "name": "get_pedal_misapplication_risk",
+      "description": "Estimates the risk of unintended pedal misapplication and sudden unintended acceleration.",
+      "parameters": {
+        "type": "OBJECT",
+        "properties": {
+          "value": {
+            "type": "BOOLEAN",
+            "description": "Whether pedal misapplication risk is currently detected."
+          },
+          "level": {
+            "type": "STRING",
+            "description": "Pedal misapplication severity level.",
+            "enum": [
+              "low",
+              "mid",
+              "high",
+              "critical"
+            ]
+          },
+          "confidence": {
+            "type": "NUMBER",
+            "description": "Detection confidence (0.0-1.0).",
+            "minimum": 0.0,
+            "maximum": 1.0
+          }
+        },
+        "additionalProperties": false,
+        "required": [
+          "value",
+          "level"
+        ]
+      }
+    }
   }
 ]

@@ -2,6 +2,7 @@ package com.aegis.das.domain.scenario
 
 enum class ScenarioId(val label: String) {
     DRIVER_FATIGUE("Driver Fatigue"),
+    PEDAL_MISAPPLICATION("Pedal Misapplication"),
     FORWARD_COLLISION("Forward Collision"),
     SYSTEM_INTRUSION("System Intrusion"),
     LOW_VISIBILITY("Low Visibility"),

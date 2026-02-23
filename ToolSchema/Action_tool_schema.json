@@ -681,5 +681,41 @@
         ]
       }
     }
+  },
+  {
+    "function": {
+      "name": "limit_engine_torque",
+      "description": "Limits the engine torque output to suppress unintended acceleration.",
+      "parameters": {
+        "type": "OBJECT",
+        "properties": {
+          "enabled": {
+            "type": "BOOLEAN",
+            "description": "Whether torque limiting should be enabled."
+          },
+          "max_ratio": {
+            "type": "NUMBER",
+            "description": "Maximum allowed torque ratio (0.0-1.0).",
+            "minimum": 0.0,
+            "maximum": 1.0
+          },
+          "duration_ms": {
+            "type": "INTEGER",
+            "description": "Torque limiting duration in milliseconds.",
+            "minimum": 0,
+            "maximum": 60000
+          },
+          "reason": {
+            "type": "STRING",
+            "description": "Reason for applying torque limitation."
+          }
+        },
+        "additionalProperties": false,
+        "required": [
+          "enabled",
+          "max_ratio"
+        ]
+      }
+    }
   }
 ]
